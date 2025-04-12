@@ -128,6 +128,11 @@ resource "yandex_compute_instance" "wrong_b" {
     }
   }
 
+lifecycle {
+    ignore_changes = [boot_disk.0.initialize_params.0.image_id]
+  }
+
+
   metadata = {
     user-data          = file("./cloud-init.yml")
     serial-port-enable = 1
@@ -143,6 +148,40 @@ resource "yandex_compute_instance" "wrong_b" {
   }
 }
 
+resource "yandex_compute_instance" "db" {
+  name        = "db" #Имя ВМ в облачной консоли
+  hostname    = "db" #формирует FDQN имя хоста, без hostname будет сгенрировано случаное имя.
+  platform_id = "standard-v3"
+  zone        = "ru-central1-b" #зона ВМ должна совпадать с зоной subnet!!!
+
+  resources {
+    cores         = var.test.cores
+    memory        = 1
+    core_fraction = 20
+  }
+
+  boot_disk {
+    initialize_params {
+      image_id = data.yandex_compute_image.ubuntu_2204_lts.image_id
+      type     = "network-hdd"
+      size     = 10
+    }
+  }
+
+  metadata = {
+    user-data          = file("./cloud-init.yml")
+    serial-port-enable = 1
+  }
+
+  scheduling_policy { preemptible = true }
+
+  network_interface {
+    subnet_id          = yandex_vpc_subnet.develop_b.id
+    nat                = false
+    security_group_ids = [yandex_vpc_security_group.LAN.id, yandex_vpc_security_group.web_sg.id]
+
+  }
+}
 
 resource "local_file" "inventory" {
   content  = <<-XYZ
@@ -152,10 +191,15 @@ resource "local_file" "inventory" {
   [webservers]
   ${yandex_compute_instance.web_a.network_interface.0.ip_address}
   ${yandex_compute_instance.web_b.network_interface.0.ip_address}
+
+  [db]
+  ${yandex_compute_instance.db.network_interface.0.ip_address}
+
   [webservers:vars]
   ansible_ssh_common_args='-o ProxyCommand="ssh -p 22 -W %h:%p -q user@${yandex_compute_instance.bastion.network_interface.0.nat_ip_address}"'
   XYZ
   filename = "./hosts.ini"
+
 }
 
 

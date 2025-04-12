@@ -1,15 +1,15 @@
 variable "flow" {
   type    = string
-  default = "24-01"
+  default = "24-04"
 }
 
 variable "cloud_id" {
   type    = string
-  default = "b1gn3ndpua1j6jaabf79"
+  default = "b1gesbqt1v6vuasiat4c"
 }
 variable "folder_id" {
   type    = string
-  default = "b1gfu61oc15cb99nqmfe"
+  default = "b1gk3h5pkcid37urv21i"
 }
 
 variable "test" {
