@@ -1,48 +1,65 @@
-# Домашние задания по курсу «Виртуализация, автоматизация и CI/CD»
+# Домашнее задание к занятию «Подъём инфраструктуры в Yandex Cloud» - Кузьминова Софья Николаевна
 
-В этом репозитории собраны ваши домашние задания к каждой лекции. 
+### Задание 1 
 
-Задачи без звёздочки обязательные. Их выполнение необходимо для получения зачёта и диплома о профессиональной переподготовке.
+Повторить демонстрацию лекции(развернуть vpc, 2 веб сервера, бастион сервер)
 
-Задачи со звёздочкой (*) являются дополнительными задачами или задачами повышенной сложности. Они необязательны для выполнения, но помогут вам лучше разобраться в теме.
-
-Любые вопросы по решению задач задавайте в чате учебной группы. Ссылку вы найдёте в письме на вашей электронной почте.
+![Снимок экрана от 2025-04-11 22-43-44](https://github.com/user-attachments/assets/5b577508-d1e1-4aa5-bd69-50066db46f7d)
 
 
-## Модуль: Виртуализация
+### Задание 2 
 
-1. [Виртуализация и облачные решения: AWS, GCP, Yandex Cloud, OpenStack](https://github.com/netology-code/sdvps-homeworks/blob/main/6-01.md).
-
-2. [Типы виртуализации: KVM, QEMU](https://github.com/netology-code/sdvps-homeworks/blob/main/6-02-new.md).
-
-3. [Docker. Часть 1](https://github.com/netology-code/sdvps-homeworks/blob/main/6-03-new.md).
-
-4. [Docker. Часть 2](https://github.com/netology-code/sdvps-homeworks/blob/main/6-04-new.md).
-
-5. [Kubernetes. Часть 1](https://github.com/netology-code/sdvps-homeworks/blob/main/6-05-new.md).
-
-6. [Kubernetes. Часть 2](https://github.com/netology-code/sdvps-homeworks/blob/main/6-06-new.md).
+С помощью ansible подключиться к web-a и web-b , установить на них nginx.(написать нужный ansible playbook)
 
 
-## Модуль: Автоматизация администрирования инфраструктуры
-
-1. [Ansible. Часть 1](https://github.com/netology-code/sdvps-homeworks/blob/main/7-01.md).
-
-2. [Ansible. Часть 2](https://github.com/netology-code/sdvps-homeworks/blob/main/7.1_part_2.md).
-
-3. [Terraform](https://github.com/netology-code/sdvps-homeworks/blob/main/7-02-new.md).
-
-4. [Подъём инфраструктуры в Yandex Cloud](https://github.com/netology-code/sdvps-homeworks/blob/main/7-03.md).
+Провести тестирование и приложить скриншоты развернутых в облаке ВМ, успешно отработавшего ansible playbook. 
 
 
-## Модуль: Введение в DevOps
+![Снимок экрана от 2025-04-12 14-09-47](https://github.com/user-attachments/assets/71d39e55-fe6d-4d4b-9059-8e4c167b7bf4) результат тестового плейбука
 
-1. [Git](https://github.com/netology-code/sdvps-homeworks/blob/main/8-01.md).
+![Снимок экрана от 2025-04-12 17-56-06](https://github.com/user-attachments/assets/8ef48c25-b891-49b6-8e33-1a2356d3f98f) запуск плейбука, устанавливающего nginx
 
-2. [Что такое DevOps. CI/CD](https://github.com/netology-code/sdvps-homeworks/blob/main/8-02.md).
+![Снимок экрана от 2025-04-12 17-56-51](https://github.com/user-attachments/assets/ef5ea8a3-9644-4b23-82cc-6e980d62666c)
 
-3. [GitLab](https://github.com/netology-code/sdvps-homeworks/blob/main/8-03.md).
+![Снимок экрана от 2025-04-12 17-56-54](https://github.com/user-attachments/assets/a55efefa-5404-47c5-96bc-bf1e6ded6ab6)
 
+---
+
+## Дополнительные задания* (со звёздочкой)
+
+Их выполнение необязательное и не влияет на получение зачёта по домашнему заданию. Можете их решить, если хотите глубже и/или шире разобраться в материале.
+
+--- 
+### Задание 3*
+
+**Выполните действия, приложите скриншот скриптов, скриншот выполненного проекта.**
+
+1. Добавить еще одну виртуальную машину. 
+2. Установить на нее любую базу данных. 
+3. Выполнить проверку состояния запущенных служб через Ansible.
+
+![Снимок экрана от 2025-04-12 19-46-31](https://github.com/user-attachments/assets/c62b2be0-cf99-438c-ab36-cdf786c33f14)
+
+![Снимок экрана от 2025-04-12 18-35-27](https://github.com/user-attachments/assets/a58d2c4c-c37e-467b-b433-86997f645e16)
+
+![Снимок экрана от 2025-04-12 18-41-29](https://github.com/user-attachments/assets/a1b86a9d-a355-4b65-99c4-cc50ec8eb2b5)
+
+--- 
+### Задание 3*
+Изучите [инструкцию](https://cloud.yandex.ru/docs/tutorials/infrastructure-management/terraform-quickstart) yandex для terraform.
+Добейтесь работы паплайна с безопасной передачей токена от облака в terraform через переменные окружения. Для этого:
+
+1. Настройте профиль для yc tools по инструкции.
+2. Удалите из кода строчку "token = var.yandex_cloud_token". Terraform будет считывать значение ENV переменной YC_TOKEN.
+3. Выполните команду export YC_TOKEN=$(yc iam create-token) и в том же shell запустите terraform.
+4. Для того чтобы вам не нужно было каждый раз выполнять export - добавьте данную команду в самый конец файла ~/.bashrc
+
+![Снимок экрана от 2025-04-12 19-31-00](https://github.com/user-attachments/assets/2357f05b-5b93-4c37-a3b5-233a6b198d1e)
+
+
+![Снимок экрана от 2025-04-12 19-31-09](https://github.com/user-attachments/assets/46d7080f-5366-4de4-94b6-94c22a9e79ff)
+
+---
 
 
 
