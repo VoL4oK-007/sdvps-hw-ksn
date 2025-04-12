@@ -5,4 +5,4 @@ users:
     shell: /bin/bash
     sudo: [ALL=(ALL) NOPASSWD:ALL]
     ssh_authorized_keys:
-      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKSlvpLIwO++oqNYY7fxr3itFLtYjzvDvFzQETZqU7Ln sofyak@sofyak-VirtualBox
+      - ssh-ed25519 
